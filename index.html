@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivian Dcosta - Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <i class="fas fa-code"></i> VD
+      </div>
+      <ul class="nav-menu">
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Home Section -->
+  <section id="home" class="section hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">Hi, I'm <span class="gradient-text">Vivian Dcosta</span></h1>
+        <p class="hero-subtitle">AI/ML Enthusiast | Web Developer | Tech Innovator</p>
+        <p class="hero-description">Crafting digital experiences with cutting-edge technology</p>
+        <div class="hero-buttons">
+          <button class="btn btn-primary" onclick="scrollTo('projects')">View My Work</button>
+          <button class="btn btn-secondary" onclick="scrollTo('contact')">Get In Touch</button>
+        </div>
+        <div class="social-links">
+          <a href="#" class="social-icon" title="GitHub"><i class="fab fa-github"></i></a>
+          <a href="#" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" class="social-icon" title="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="hero-animation">
+        <div class="floating-card card-1">AI</div>
+        <div class="floating-card card-2">ML</div>
+        <div class="floating-card card-3">Web</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section about">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <p>
+            I'm a passionate Computer Science Engineering student with a deep interest in Artificial Intelligence, 
+            Machine Learning, and Full-Stack Web Development. I love solving complex problems and building innovative solutions.
+          </p>
+          <p>
+            With experience in Python, JavaScript, and modern web frameworks, I create impactful digital products 
+            that combine beautiful design with powerful functionality.
+          </p>
+          <div class="about-stats">
+            <div class="stat">
+              <h3>10+</h3>
+              <p>Projects Completed</p>
+            </div>
+            <div class="stat">
+              <h3>50+</h3>
+              <p>Happy Collaborators</p>
+            </div>
+            <div class="stat">
+              <h3>2+</h3>
+              <p>Years Experience</p>
+            </div>
+          </div>
+        </div>
+        <div class="about-image">
+          <div class="profile-card">
+            <div class="profile-header"></div>
+            <div class="profile-content">
+              <p>Vivian Dcosta</p>
+              <p class="role">Full-Stack Developer</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="section skills">
+    <div class="container">
+      <h2 class="section-title">Technical Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <i class="fas fa-python"></i>
+          <h3>Python</h3>
+          <p>AI/ML, Data Science, Automation</p>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 90%"></div>
+          </div>
+        </div>
+        <div class="skill-card">
+          <i class="fas fa-js"></i>
+          <h3>JavaScript</h3>
+          <p>Frontend, Node.js, React</p>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 85%"></div>
+          </div>
+        </div>
+        <div class="skill-card">
+          <i class="fas fa-database"></i>
+          <h3>Databases</h3>
+          <p>MongoDB, SQL, Firebase</p>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 80%"></div>
+          </div>
+        </div>
+        <div class="skill-card">
+          <i class="fas fa-paint-brush"></i>
+          <h3>UI/UX Design</h3>
+          <p>Figma, CSS, Responsive Design</p>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 82%"></div>
+          </div>
+        </div>
+        <div class="skill-card">
+          <i class="fas fa-brain"></i>
+          <h3>Machine Learning</h3>
+          <p>TensorFlow, Scikit-learn, NLP</p>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 75%"></div>
+          </div>
+        </div>
+        <div class="skill-card">
+          <i class="fas fa-cloud"></i>
+          <h3>Cloud & DevOps</h3>
+          <p>AWS, Docker, Deployment</p>
+          <div class="skill-bar">
+            <div class="skill-progress" style="width: 70%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="section projects">
+    <div class="container">
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="filter-buttons">
+        <button class="filter-btn active" onclick="filterProjects('all')">All</button>
+        <button class="filter-btn" onclick="filterProjects('web')">Web</button>
+        <button class="filter-btn" onclick="filterProjects('ml')">AI/ML</button>
+        <button class="filter-btn" onclick="filterProjects('mobile')">Mobile</button>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card" data-category="web">
+          <div class="project-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div class="project-content">
+            <h3>Food Ordering Platform</h3>
+            <p>Responsive web application for browsing and ordering food with real-time updates.</p>
+            <div class="project-tags">
+              <span class="tag">React</span>
+              <span class="tag">Node.js</span>
+              <span class="tag">MongoDB</span>
+            </div>
+            <div class="project-buttons">
+              <button class="btn-link" onclick="viewProject('Food Ordering')">View</button>
+              <button class="btn-link" onclick="viewProject('Food Ordering')">Code</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-category="ml">
+          <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)">
+            <i class="fas fa-robot"></i>
+          </div>
+          <div class="project-content">
+            <h3>AI Chatbot</h3>
+            <p>Intelligent chatbot using NLP and machine learning for conversation and automation.</p>
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">NLP</span>
+              <span class="tag">TensorFlow</span>
+            </div>
+            <div class="project-buttons">
+              <button class="btn-link" onclick="viewProject('AI Chatbot')">View</button>
+              <button class="btn-link" onclick="viewProject('AI Chatbot')">Code</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-category="web">
+          <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <div class="project-content">
+            <h3>Portfolio Website</h3>
+            <p>Modern portfolio with smooth animations, responsive design, and backend integration.</p>
+            <div class="project-tags">
+              <span class="tag">HTML5</span>
+              <span class="tag">CSS3</span>
+              <span class="tag">JavaScript</span>
+            </div>
+            <div class="project-buttons">
+              <button class="btn-link" onclick="viewProject('Portfolio')">View</button>
+              <button class="btn-link" onclick="viewProject('Portfolio')">Code</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-category="ml">
+          <div class="project-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%)">
+            <i class="fas fa-chart-bar"></i>
+          </div>
+          <div class="project-content">
+            <h3>Data Analytics Dashboard</h3>
+            <p>Interactive dashboard for visualizing and analyzing large datasets with ML predictions.</p>
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Pandas</span>
+              <span class="tag">Plotly</span>
+            </div>
+            <div class="project-buttons">
+              <button class="btn-link" onclick="viewProject('Analytics')">View</button>
+              <button class="btn-link" onclick="viewProject('Analytics')">Code</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-category="mobile">
+          <div class="project-image" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <div class="project-content">
+            <h3>Mobile Fitness App</h3>
+            <p>Cross-platform fitness tracking application with workout plans and progress monitoring.</p>
+            <div class="project-tags">
+              <span class="tag">React Native</span>
+              <span class="tag">Firebase</span>
+              <span class="tag">Redux</span>
+            </div>
+            <div class="project-buttons">
+              <button class="btn-link" onclick="viewProject('Fitness App')">View</button>
+              <button class="btn-link" onclick="viewProject('Fitness App')">Code</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card" data-category="web">
+          <div class="project-image" style="background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%)">
+            <i class="fas fa-video"></i>
+          </div>
+          <div class="project-content">
+            <h3>Video Streaming Platform</h3>
+            <p>Streaming platform with user authentication, recommendations, and quality adaptive streaming.</p>
+            <div class="project-tags">
+              <span class="tag">Vue.js</span>
+              <span class="tag">WebRTC</span>
+              <span class="tag">AWS</span>
+            </div>
+            <div class="project-buttons">
+              <button class="btn-link" onclick="viewProject('Streaming')">View</button>
+              <button class="btn-link" onclick="viewProject('Streaming')">Code</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section contact">
+    <div class="container">
+      <h2 class="section-title">Let's Connect</h2>
+      <p class="contact-subtitle">Have a project in mind? Let's talk!</p>
+      
+      <div class="contact-wrapper">
+        <div class="contact-form">
+          <form id="contactForm">
+            <div class="form-group">
+              <input type="text" id="name" placeholder="Your Name" required>
+              <span class="form-error" id="nameError"></span>
+            </div>
+            <div class="form-group">
+              <input type="email" id="email" placeholder="Your Email" required>
+              <span class="form-error" id="emailError"></span>
+            </div>
+            <div class="form-group">
+              <input type="text" id="subject" placeholder="Subject" required>
+              <span class="form-error" id="subjectError"></span>
+            </div>
+            <div class="form-group">
+              <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+              <span class="form-error" id="messageError"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+            <div id="formMessage"></div>
+          </form>
+        </div>
+
+        <div class="contact-info">
+          <div class="info-card">
+            <i class="fas fa-envelope"></i>
+            <h3>Email</h3>
+            <p>dcostavivian08@gmail.com</p>
+          </div>
+          <div class="info-card">
+            <i class="fas fa-phone"></i>
+            <h3>Phone</h3>
+            <p>+91 XXXXXXXX</p>
+          </div>
+          <div class="info-card">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>Location</h3>
+            <p>Goa, India</p>
+          </div>
+          <div class="info-card">
+            <i class="fas fa-clock"></i>
+            <h3>Availability</h3>
+            <p>Open for freelance & full-time</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Me</h3>
+        <div class="footer-social">
+          <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>Newsletter</h3>
+        <form class="newsletter-form" id="newsletterForm">
+          <input type="email" placeholder="Your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Vivian Dcosta. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Modal for Project Details -->
+  <div id="projectModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="modalTitle"></h2>
+      <p id="modalDescription"></p>
+      <div id="modalDetails"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

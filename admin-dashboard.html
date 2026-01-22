@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #667eea;
+      --secondary: #764ba2;
+      --bg: #0f0f1e;
+      --surface: #1a1a2e;
+      --text: #ffffff;
+      --text-light: #b0b0b0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--bg) 0%, #1a1a3e 100%);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+      border: 1px solid #2d2d44;
+    }
+
+    .header h1 {
+      margin-bottom: 0.5rem;
+    }
+
+    .header p {
+      color: var(--text-light);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(240, 147, 251, 0.1));
+      border: 1px solid #2d2d44;
+      padding: 1.5rem;
+      border-radius: 10px;
+    }
+
+    .stat-card h3 {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card .number {
+      font-size: 2rem;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .section {
+      background: var(--surface);
+      border: 1px solid #2d2d44;
+      border-radius: 10px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .section h2 {
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: rgba(102, 126, 234, 0.1);
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #2d2d44;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid #2d2d44;
+    }
+
+    tr:hover {
+      background: rgba(102, 126, 234, 0.05);
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+
+    .btn-small {
+      padding: 0.3rem 0.6rem;
+      font-size: 0.85rem;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      flex: 1;
+      padding: 0.7rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #2d2d44;
+      border-radius: 5px;
+      color: var(--text);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--text-light);
+    }
+
+    .message {
+      padding: 1rem;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+
+    .message.success {
+      background: rgba(74, 222, 128, 0.2);
+      color: #4ade80;
+      border: 1px solid #4ade80;
+    }
+
+    .message.error {
+      background: rgba(248, 113, 113, 0.2);
+      color: #f87171;
+      border: 1px solid #f87171;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mt-2 {
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>📊 Admin Dashboard</h1>
+      <p>Manage contacts, subscribers, and view analytics</p>
+    </div>
+
+    <!-- API Key Input -->
+    <div class="section">
+      <h2>🔐 Admin Access</h2>
+      <div class="input-group">
+        <input type="text" id="apiKey" placeholder="Enter your admin API key">
+        <button class="btn btn-primary" onclick="verifyApiKey()">Verify</button>
+      </div>
+      <div id="message"></div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="stats-grid" id="statsGrid" style="display: none;">
+      <div class="stat-card">
+        <h3>Total Contacts</h3>
+        <div class="number" id="totalContacts">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Total Subscribers</h3>
+        <div class="number" id="totalSubscribers">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Total Visitors</h3>
+        <div class="number" id="totalVisitors">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Recent Contacts (7d)</h3>
+        <div class="number" id="recentContacts">0</div>
+      </div>
+    </div>
+
+    <!-- Contacts Section -->
+    <div class="section" id="contactsSection" style="display: none;">
+      <h2>📧 Recent Contacts</h2>
+      <table id="contactsTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="contactsBody">
+          <tr>
+            <td colspan="7" class="text-center">Loading...</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="mt-2 text-center">
+        <button class="btn btn-primary" onclick="exportContacts()">
+          <i class="fas fa-download"></i> Export Contacts
+        </button>
+      </div>
+    </div>
+
+    <!-- Subscribers Section -->
+    <div class="section" id="subscribersSection" style="display: none;">
+      <h2>📬 Newsletter Subscribers</h2>
+      <table id="subscribersTable">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Subscribed Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="subscribersBody">
+          <tr>
+            <td colspan="4" class="text-center">Loading...</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="mt-2">
+        <h3>Send Newsletter</h3>
+        <div class="input-group" style="flex-direction: column;">
+          <input type="text" id="newsletterSubject" placeholder="Newsletter Subject">
+          <textarea id="newsletterMessage" placeholder="Newsletter Message (HTML supported)" rows="5"></textarea>
+          <button class="btn btn-primary" onclick="sendNewsletter()">Send Newsletter</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visitor Analytics -->
+    <div class="section" id="analyticsSection" style="display: none;">
+      <h2>📊 Visitor Analytics</h2>
+      <table id="analyticsTable">
+        <thead>
+          <tr>
+            <th>Page</th>
+            <th>Total Visits</th>
+            <th>Unique Visitors</th>
+          </tr>
+        </thead>
+        <tbody id="analyticsBody">
+          <tr>
+            <td colspan="3" class="text-center">Loading...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    let apiKey = '';
+    const apiUrl = 'http://localhost:3001/api';
+
+    function verifyApiKey() {
+      apiKey = document.getElementById('apiKey').value;
+      
+      if (!apiKey) {
+        showMessage('Please enter an API key', 'error');
+        return;
+      }
+
+      // Verify API key
+      fetch(`${apiUrl}/admin/stats`, {
+        headers: { 'X-API-Key': apiKey }
+      })
+      .then(response => {
+        if (response.ok) {
+          showMessage('✓ API key verified!', 'success');
+          loadDashboard();
+        } else {
+          showMessage('✗ Invalid API key', 'error');
+        }
+      })
+      .catch(error => {
+        showMessage('✗ Connection error: ' + error.message, 'error');
+      });
+    }
+
+    function loadDashboard() {
+      document.getElementById('statsGrid').style.display = 'grid';
+      document.getElementById('contactsSection').style.display = 'block';
+      document.getElementById('subscribersSection').style.display = 'block';
+      document.getElementById('analyticsSection').style.display = 'block';
+
+      loadStatistics();
+      loadContacts();
+      loadSubscribers();
+      loadAnalytics();
+    }
+
+    function loadStatistics() {
+      fetch(`${apiUrl}/admin/stats`, {
+        headers: { 'X-API-Key': apiKey }
+      })
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('totalContacts').textContent = data.total_contacts;
+        document.getElementById('totalSubscribers').textContent = data.total_subscribers;
+        document.getElementById('totalVisitors').textContent = data.total_visitors;
+        document.getElementById('recentContacts').textContent = data.recent_contacts;
+      })
+      .catch(error => console.error('Error loading stats:', error));
+    }
+
+    function loadContacts() {
+      fetch(`${apiUrl}/admin/contacts`, {
+        headers: { 'X-API-Key': apiKey }
+      })
+      .then(r => r.json())
+      .then(contacts => {
+        const tbody = document.getElementById('contactsBody');
+        tbody.innerHTML = '';
+        
+        if (contacts.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="text-center">No contacts yet</td></tr>';
+          return;
+        }
+
+        contacts.forEach(contact => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${contact.name}</td>
+            <td>${contact.email}</td>
+            <td>${contact.subject}</td>
+            <td>${contact.message.substring(0, 50)}...</td>
+            <td>${new Date(contact.created_at).toLocaleDateString()}</td>
+            <td>${contact.status}</td>
+            <td>
+              <button class="btn btn-small btn-danger" onclick="deleteContact(${contact.id})">Delete</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(error => console.error('Error loading contacts:', error));
+    }
+
+    function loadSubscribers() {
+      fetch(`${apiUrl}/admin/subscribers`, {
+        headers: { 'X-API-Key': apiKey }
+      })
+      .then(r => r.json())
+      .then(subscribers => {
+        const tbody = document.getElementById('subscribersBody');
+        tbody.innerHTML = '';
+        
+        if (subscribers.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" class="text-center">No subscribers</td></tr>';
+          return;
+        }
+
+        subscribers.forEach(subscriber => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${subscriber.email}</td>
+            <td>${new Date(subscriber.subscribed_at).toLocaleDateString()}</td>
+            <td>${subscriber.status}</td>
+            <td>
+              <button class="btn btn-small btn-danger" onclick="deleteSubscriber(${subscriber.id})">Delete</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(error => console.error('Error loading subscribers:', error));
+    }
+
+    function loadAnalytics() {
+      fetch(`${apiUrl}/admin/visitor-stats`, {
+        headers: { 'X-API-Key': apiKey }
+      })
+      .then(r => r.json())
+      .then(analytics => {
+        const tbody = document.getElementById('analyticsBody');
+        tbody.innerHTML = '';
+        
+        if (analytics.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="3" class="text-center">No analytics data</td></tr>';
+          return;
+        }
+
+        analytics.forEach(item => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${item.page}</td>
+            <td>${item.visits}</td>
+            <td>${item.unique_visitors}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(error => console.error('Error loading analytics:', error));
+    }
+
+    function deleteContact(id) {
+      if (!confirm('Are you sure you want to delete this contact?')) return;
+      
+      fetch(`${apiUrl}/admin/contacts/${id}`, {
+        method: 'DELETE',
+        headers: { 'X-API-Key': apiKey }
+      })
+      .then(r => r.json())
+      .then(data => {
+        showMessage('Contact deleted', 'success');
+        loadContacts();
+      })
+      .catch(error => showMessage('Error deleting contact', 'error'));
+    }
+
+    function deleteSubscriber(id) {
+      if (!confirm('Are you sure?')) return;
+      alert('Delete subscriber endpoint can be added');
+    }
+
+    function exportContacts() {
+      window.location.href = `${apiUrl}/admin/export-contacts`;
+    }
+
+    function sendNewsletter() {
+      const subject = document.getElementById('newsletterSubject').value;
+      const message = document.getElementById('newsletterMessage').value;
+
+      if (!subject || !message) {
+        showMessage('Please fill in both fields', 'error');
+        return;
+      }
+
+      fetch(`${apiUrl}/admin/send-newsletter`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-Key': apiKey
+        },
+        body: JSON.stringify({ subject, message })
+      })
+      .then(r => r.json())
+      .then(data => {
+        showMessage(data.message, 'success');
+        document.getElementById('newsletterSubject').value = '';
+        document.getElementById('newsletterMessage').value = '';
+      })
+      .catch(error => showMessage('Error sending newsletter', 'error'));
+    }
+
+    function showMessage(text, type) {
+      const msg = document.getElementById('message');
+      msg.textContent = text;
+      msg.className = 'message ' + type;
+      setTimeout(() => msg.textContent = '', 5000);
+    }
+  </script>
+</body>
+</html>
