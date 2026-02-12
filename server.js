@@ -20,6 +20,9 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Serve static files from the root directory
+app.use(express.static(__dirname));
+
 // ==================== DATABASE SETUP ====================
 let db;
 
@@ -134,7 +137,7 @@ transporter.verify((error, success) => {
 // ==================== HELPER FUNCTIONS ====================
 function runAsync(sql, params = []) {
   return new Promise((resolve, reject) => {
-    db.run(sql, params, function(err) {
+    db.run(sql, params, function (err) {
       if (err) reject(err);
       else resolve({ lastID: this.lastID, changes: this.changes });
     });
@@ -163,7 +166,7 @@ function allAsync(sql, params = []) {
 
 // 1. HEALTH CHECK - Test if server is running
 app.get('/api/health', (req, res) => {
-  res.json({ 
+  res.json({
     status: '✅ Server is running!',
     timestamp: new Date(),
     uptime: Math.floor(process.uptime()),
@@ -207,7 +210,30 @@ app.post('/api/contact', async (req, res) => {
           }
         });
 
-        res.status(201).json({ 
+        // Send WhatsApp notification via CallMeBot
+        const whatsappApiKey = process.env.WHATSAPP_API_KEY;
+        const phoneNumber = process.env.PHONE_NUMBER;
+
+        if (whatsappApiKey && phoneNumber) {
+          const whatsappMessage = `New Contact from Portfolio:\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}`;
+          const encodedMessage = encodeURIComponent(whatsappMessage);
+
+          // Using fetch to call CallMeBot API
+          // Since fetch is not native in older Node versions, we might need a library or use https module
+          // But for modern Node (v18+), global fetch is available.
+          // Fallback to https module if needed.
+
+          const https = require('https');
+          const url = `https://api.callmebot.com/whatsapp.php?phone=${phoneNumber}&text=${encodedMessage}&apikey=${whatsappApiKey}`;
+
+          https.get(url, (res) => {
+            console.log('WhatsApp notification sent, status:', res.statusCode);
+          }).on('error', (e) => {
+            console.error('WhatsApp notification failed:', e);
+          });
+        }
+
+        res.status(201).json({
           success: true,
           message: 'Contact saved successfully!',
           data: { name, email, subject }
@@ -261,7 +287,7 @@ app.post('/api/newsletter', (req, res) => {
           return res.status(500).json({ error: 'Subscription failed' });
         }
 
-        res.status(201).json({ 
+        res.status(201).json({
           success: true,
           message: 'Subscribed successfully!'
         });
@@ -294,11 +320,11 @@ app.post('/api/projects', (req, res) => {
     db.run(
       'INSERT INTO projects (name, description, technologies, link, github) VALUES (?, ?, ?, ?, ?)',
       [name, description, technologies, link, github],
-      function(err) {
+      function (err) {
         if (err) {
           return res.status(500).json({ error: 'Failed to add project' });
         }
-        res.status(201).json({ 
+        res.status(201).json({
           success: true,
           message: 'Project added!',
           projectId: this.lastID
@@ -370,11 +396,11 @@ app.post('/api/testimonials', (req, res) => {
     db.run(
       'INSERT INTO testimonials (name, message, rating) VALUES (?, ?, ?)',
       [name, message, rating || 5],
-      function(err) {
+      function (err) {
         if (err) {
           return res.status(500).json({ error: 'Failed to add testimonial' });
         }
-        res.status(201).json({ 
+        res.status(201).json({
           success: true,
           message: 'Testimonial added!',
           testimonialId: this.lastID
