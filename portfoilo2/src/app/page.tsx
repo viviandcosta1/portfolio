@@ -14,6 +14,7 @@ import Contact from "@/components/Contact";
 import StarsCanvas from "@/components/canvas/Stars";
 import Footer from "@/components/Footer";
 import Stats from "@/components/Stats";
+import Chatbot from "@/components/Chatbot";
 
 export default function Home() {
     return (
@@ -41,6 +42,7 @@ export default function Home() {
                 <StarsCanvas />
             </div>
             <Footer />
+            <Chatbot />
         </main>
     );
 }
