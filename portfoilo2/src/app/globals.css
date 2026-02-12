@@ -13,6 +13,26 @@
     .text-balance {
         text-wrap: balance;
     }
+
+    .paddingX {
+        @apply sm:px-16 px-6;
+    }
+
+    .paddingY {
+        @apply sm:py-16 py-10;
+    }
+
+    .padding {
+        @apply sm:px-16 px-6 sm:py-16 py-10;
+    }
+
+    .marginX {
+        @apply sm:mx-16 mx-6;
+    }
+
+    .marginY {
+        @apply sm:my-16 my-10;
+    }
 }
 
 body {

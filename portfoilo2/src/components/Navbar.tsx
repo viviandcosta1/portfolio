@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { Menu, X } from "lucide-react";
 import { navLinks } from "../constants";
-// import { logo, menu, close } from "../assets"; // Need assets or placeholders
 
 const Navbar = () => {
     const [active, setActive] = useState("");
@@ -59,29 +59,28 @@ const Navbar = () => {
                     ))}
                 </ul>
                 <div className='sm:hidden flex flex-1 justify-end items-center'>
-                    {/* Mobile Menu Toggle Placeholder */}
                     <div
-                        className='w-[28px] h-[28px] object-contain cursor-pointer text-white font-bold'
+                        className='w-[28px] h-[28px] flex items-center justify-center cursor-pointer text-white'
                         onClick={() => setToggle(!toggle)}
                     >
-                        {toggle ? "X" : "☰"}
+                        {toggle ? <X size={28} /> : <Menu size={28} />}
                     </div>
                     <div
                         className={`${!toggle ? "hidden" : "flex"
-                            } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
+                            } p-8 bg-tertiary/95 backdrop-blur-xl absolute top-20 right-0 mx-4 my-2 min-w-[200px] z-10 rounded-3xl border border-white/10 shadow-2xl`}
                     >
-                        <ul className='list-none flex justify-end items-start flex-1 flex-col gap-4'>
+                        <ul className='list-none flex justify-end items-start flex-1 flex-col gap-6'>
                             {navLinks.map((nav) => (
                                 <li
                                     key={nav.id}
-                                    className={`font-poppins font-medium cursor-pointer text-[16px] ${active === nav.title ? "text-white" : "text-secondary"
+                                    className={`font-poppins font-bold cursor-pointer text-[18px] w-full pb-2 border-b border-white/5 last:border-0 ${active === nav.title ? "text-white" : "text-secondary"
                                         }`}
                                     onClick={() => {
                                         setToggle(!toggle);
                                         setActive(nav.title);
                                     }}
                                 >
-                                    <a href={`#${nav.id}`}>{nav.title}</a>
+                                    <a href={`#${nav.id}`} className="block">{nav.title}</a>
                                 </li>
                             ))}
                         </ul>
