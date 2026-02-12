@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Bot, User, Sparkles } from "lucide-react";
-import { experiences, education, projects, technologies } from "../constants";
+import { experiences, education, projects, technologies, certifications, spokenLanguages, hobbies } from "../constants";
 
 const Chatbot = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -23,33 +23,64 @@ const Chatbot = () => {
     const getBotResponse = (query: string) => {
         const q = query.toLowerCase();
 
-        if (q.includes("hello") || q.includes("hi")) {
-            return "Hello! How can I help you today?";
-        }
-        if (q.includes("skill") || q.includes("tech") || q.includes("language")) {
-            const techs = technologies.map(t => t.name).join(", ");
-            return `Vivian is proficient in: ${techs}. He specializes in AI/ML and Web Development.`;
-        }
-        if (q.includes("project")) {
-            const projs = projects.map(p => p.name).join(", ");
-            return `Vivian has worked on several cool projects like: ${projs}. Which one would you like to hear more about?`;
-        }
-        if (q.includes("education") || q.includes("study") || q.includes("college")) {
-            const edu = education[0];
-            return `Vivian is pursuing a ${edu.degree} at ${edu.institution}. ${edu.description}`;
-        }
-        if (q.includes("experience") || q.includes("work") || q.includes("intern")) {
-            const exp = experiences[0];
-            return `Vivian is currently a ${exp.title} at ${exp.company_name}. He has worked on PPE detection and AI automation.`;
-        }
-        if (q.includes("contact") || q.includes("email") || q.includes("phone")) {
-            return "You can contact Vivian via email at dcostavivian08@gmail.com or via WhatsApp at +91 6360209255.";
-        }
-        if (q.includes("traffic")) {
-            return "The Smart Traffic project uses ML to detect potholes and analyze city traffic in real-time. It's built with Python and AI analytics.";
+        if (q.includes("hello") || q.includes("hi") || q.includes("hey")) {
+            return "Hello! I'm Vivian Dcosta's virtual assistant. I can tell you about his B.Tech education, AI/ML internship, tech stack, or his projects. What would you like to know?";
         }
 
-        return "That's a great question! I'm still learning, but I can tell you about Vivian's AI/ML skills, his B.Tech studies, or his recent internship at Daylink Tech Labs. What interests you most?";
+        if ((q.includes("skill") || q.includes("tech") || q.includes("stack") || q.includes("language")) && !q.includes("speak")) {
+            const techs = technologies.map(t => t.name).join(", ");
+            return `Vivian has a strong technical stack: ${techs}. He is specifically focused on Python for AI/ML and React for modern web development.`;
+        }
+
+        if (q.includes("project") || q.includes("work sample")) {
+            const projs = projects.map(p => `• ${p.name}: ${p.description}`).join("\n");
+            return `Vivian has several core projects:\n\n${projs}\n\nHe uses Python, Selenium, Pandas, and React to build these solutions.`;
+        }
+
+        if (q.includes("education") || q.includes("study") || q.includes("college") || q.includes("university")) {
+            const eduList = education.map(e => `• ${e.degree} from ${e.institution} (${e.date}). ${e.description}`).join("\n\n");
+            return `Here is Vivian's educational background:\n\n${eduList}`;
+        }
+
+        if (q.includes("experience") || q.includes("work") || q.includes("intern") || q.includes("job")) {
+            const expList = experiences.map(exp => `• ${exp.title} at ${exp.company_name} (${exp.date}). Key work: ${exp.points.join(" ")}`).join("\n\n");
+            return `Vivian's professional journey includes:\n\n${expList}`;
+        }
+
+        if (q.includes("cert") || q.includes("award") || q.includes("license")) {
+            const certList = certifications.map((c: any) => `• ${c.title} by ${c.provider}`).join("\n");
+            return `Vivian holds multiple certifications:\n\n${certList}`;
+        }
+
+        if (q.includes("language") && (q.includes("speak") || q.includes("know") || q.includes("talk"))) {
+            return `Vivian is multilingual and speaks: ${spokenLanguages.join(", ")}. This helps him collaborate effectively in diverse teams.`;
+        }
+
+        if (q.includes("hobby") || q.includes("interest") || q.includes("fun") || q.includes("hobbies")) {
+            const hobbyList = hobbies.map((h: any) => `• ${h.title}: ${h.description}`).join("\n");
+            return `Outside of coding, Vivian enjoys:\n\n${hobbyList}`;
+        }
+
+        if (q.includes("contact") || q.includes("email") || q.includes("phone") || q.includes("reach") || q.includes("whatsapp")) {
+            return "You can reach Vivian directly:\n📧 Email: dcostavivian08@gmail.com\n📱 WhatsApp: +91 6360209255\n📍 Location: Mangaluru, India";
+        }
+
+        if (q.includes("traffic") || q.includes("pothole")) {
+            const p = projects[0];
+            return `Project Spotlight: ${p.name}. ${p.description} It's a real-time system using advanced computer vision and ML.`;
+        }
+
+        if (q.includes("candle") || q.includes("business")) {
+            const p = projects[1];
+            return `Project Spotlight: ${p.name}. ${p.description} Focuses on high-end UI/UX and responsive frontend.`;
+        }
+
+        if (q.includes("scrap") || q.includes("selenium")) {
+            const p = projects[2];
+            return `Project Spotlight: ${p.name}. ${p.description} This demonstrates his proficiency in Python automation and data engineering.`;
+        }
+
+        return "I can definitely help with that! You can ask me specifically about Vivian's:\n1. Technical Skills\n2. Work Experience (Internships)\n3. Education Details\n4. Projects (Traffic, Candle, Scraping)\n5. Certifications\n6. Hobbies & Languages\n7. Contact Info";
     };
 
     const handleSend = () => {
@@ -115,8 +146,8 @@ const Chatbot = () => {
                                     className={`flex ${msg.role === "bot" ? "justify-start" : "justify-end"}`}
                                 >
                                     <div className={`max-w-[80%] p-4 rounded-2xl text-sm ${msg.role === "bot"
-                                            ? "bg-white/5 text-secondary border border-white/5 rounded-tl-none"
-                                            : "bg-[#915EFF] text-white rounded-tr-none shadow-lg shadow-[#915EFF]/20"
+                                        ? "bg-white/5 text-secondary border border-white/5 rounded-tl-none"
+                                        : "bg-[#915EFF] text-white rounded-tr-none shadow-lg shadow-[#915EFF]/20"
                                         }`}>
                                         {msg.content}
                                     </div>
